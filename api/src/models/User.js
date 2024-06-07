@@ -1,4 +1,5 @@
 import { sequelize, DataTypes, UUIDV4} from 'sequelize';
+import { Product } from './Product';
 
 sequelize.define('User', {
     id: {
@@ -9,5 +10,20 @@ sequelize.define('User', {
     name: {
         type:DataTypes.STRING,
         allowNull: false
+    },
+    admin: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue:false
     }
+})
+
+User.hasMany(Product, {
+    foreignKey: 'ProductId',
+    sourceKey: "id"
+})
+
+Product.belongsTo(User, {
+    foreignKey: "ProductId",
+    targetId: "id"
 })
